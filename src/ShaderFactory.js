@@ -14,6 +14,7 @@
 
 'use strict';
 
+import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 
 import {Shader} from './Shader.js';
@@ -67,9 +68,16 @@ export default class ShaderFactory {
             super._init(outerThis._nick);
           }
 
-          // This can be called to mark this instance to be re-usable.
+          // Fork (jarda): a pooled shader keeps its offscreen framebuffer texture
+          // (window-sized, ~20 MiB at 3440x1440) in VRAM, and every effect has its own
+          // pool, so the pools never shrink. We dispose the effect instead, which
+          // releases the texture. We defer this, as we are called from within the
+          // shader's own end-animation signal.
           returnToFactory() {
-            outerThis._freeShaders.push(this);
+            GLib.idle_add(GLib.PRIORITY_LOW, () => {
+              this.run_dispose();
+              return GLib.SOURCE_REMOVE;
+            });
           }
         });
       }

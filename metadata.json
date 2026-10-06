@@ -1,6 +1,6 @@
 {
   "uuid": "burn-my-windows@schneegans.github.com",
-  "description": "Disintegrate your windows with style.",
+  "description": "Disintegrate your windows with style. Fork (jarda): shaders release VRAM after each animation.",
   "name": "Burn My Windows",
   "donations": {
     "kofi": "schneegans",
@@ -11,5 +11,5 @@
   "settings-schema": "org.gnome.shell.extensions.burn-my-windows",
   "shell-version": ["45", "46", "47", "48", "49", "50", "51"],
   "url": "https://github.com/Schneegans/Burn-My-Windows",
-  "version": 49
+  "version": 4901
 }
